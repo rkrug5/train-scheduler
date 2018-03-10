@@ -25,6 +25,7 @@
 		}
 
 		.card-header {
+			/* font-size: 30 px; */
 			background-color: rgb(4, 4, 114);
 			color: white;
 
@@ -35,16 +36,6 @@
 			margin-bottom: 20 px;
 			margin-left: 40 px;
 			padding-left: 20 px;
-		}
-
-		label {
-			margin-left: 20 px;
-			padding-left: 20 px;
-
-		}
-
-		form {
-			padding: 20 px;
 		}
 	</style>
 
@@ -65,40 +56,63 @@
 
 
 
-		<div class="card">
+		<div class="card" id="schedule">
 			<div class="card-header">
 				Current Train Schedule
 			</div>
-			<div class="stuff">
+			<div class="row">
+				<div class="col">
+					<p>Train Name</p>
+				</div>
+				<div class="col">
+					<p>Destination</p>
+				</div>
+				<div class="col">
+					<p>Frequency (min)</p>
+				</div>
+				<div class="col">
+					<p>Next Arrival</p>
+				</div>
+				<div class="col">
+					<p>Minutes Away</p>
+				</div>
 
-				<p>times etc</p>
+
+			</div>
+
+
+
+
+			<div class="stuff" id="train-schedule">
+
+
 			</div>
 		</div>
 
-		<div class="card">
+		<div class="card mt-3" id="formdiv">
 			<div class="card-header">
 				Add a Train
 			</div>
-			<form>
+			<form class="ml-3 mt-3 mr-3">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Train Name</label>
-					<input class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter train name">
+					<input class="form-control" id="name-input" aria-describedby="emailHelp" placeholder="Enter train name">
 
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Destination</label>
-					<input class="form-control" id="destination" placeholder="Destination">
+					<input class="form-control" id="destination-input" placeholder="Destination">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">First Train Time (HH:mm - military time)</label>
-					<input class="form-control" id="time" placeholder="HH:mm">
+					<input class="form-control" id="time-input" placeholder="HH:mm">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Frequency (min)</label>
-					<input class="form-control" id="frequency" placeholder="Frequency">
+					<input class="form-control" id="frequency-input" placeholder="Frequency">
 				</div>
 
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary" id="add-train">Submit</button>
 			</form>
 
 
@@ -118,6 +132,132 @@
 
 
 
+	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyCqAZ67dimCUJVoDa5rPdHm5HkinOgZC3U",
+			authDomain: "fir-hw-af841.firebaseapp.com",
+			databaseURL: "https://fir-hw-af841.firebaseio.com",
+			projectId: "fir-hw-af841",
+			storageBucket: "fir-hw-af841.appspot.com",
+			messagingSenderId: "330770599979"
+		};
+		firebase.initializeApp(config);
+
+
+
+		//store the data form the database in a variable
+		var database = firebase.database();
+
+		// Initial Values
+		var name = "";
+		var destination = "";
+		var time = 0;
+		var frequency = 0;
+
+
+
+		// Capture Button Click
+		$("#add-train").on("click", function (event) {
+
+			//prevents page from refreshing
+			event.preventDefault();
+
+
+			// the logic for storing and retrieving the train info
+			// Don't forget to provide initial data to your Firebase database. (see lines 140-143)
+			name = $("#name-input").val().trim();
+			destination = $("#destination-input").val().trim();
+			time = $("#time-input").val().trim();
+			frequency = $("#frequency-input").val().trim();
+
+
+			//organize the way our info will be pushed to the sever
+			database.ref().push({
+
+				name: name,
+				destination: destination,
+				time: time,
+				frequency: frequency,
+				dateAdded: firebase.database.ServerValue.TIMESTAMP
+			});
+
+			//clears the input box for the next suggestion
+			$("#name-input").val(" ");
+			$("#destination-input").val(" ");
+			$("#time-input").val(" ");
+			$("#frequency-input").val(" ");
+
+		});
+
+		//code and explanation taken from recent-user-with-all-users-solved.html
+		// Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
+		database.ref().on("child_added", function (childSnapshot) {
+
+			// Log everything that's coming out of snapshot
+			console.log(childSnapshot.val().name);
+			console.log(childSnapshot.val().destination);
+			console.log(childSnapshot.val().time);
+			console.log(childSnapshot.val().frequency);
+
+
+			// // full list of items to the well
+			// $("#train-schedule").prepend(childSnapshot.val().name +
+			// 	"_____________" + childSnapshot.val().destination +
+			// 	"_____________" + childSnapshot.val().time +
+			// 	"______________" + childSnapshot.val().frequency + "_________"); 
+
+
+
+
+
+			// full list of items to the well
+			//this doesn't quite work in Bootstrap 4, but i am working on the styling
+
+
+			$("#train-schedule").prepend("<div class='well'><span class='train-name'> " + childSnapshot.val().name +
+				" </span><span class='train-destination'> " + childSnapshot.val().destination +
+				" </span><span class='train-time'> " + childSnapshot.val().time +
+				" </span><span class='train-frequency'> " + childSnapshot.val().frequency + " </span></div>");
+
+
+
+
+
+
+			// Handle the errors
+		}, function (errorObject) {
+			console.log("Errors handled: " + errorObject.code);
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
 
 
 
