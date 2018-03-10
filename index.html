@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Train App</title>
+
+	<!-- Bootstrap File -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
+
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+
+	<style>
+		.jumbotron {
+			background-image: url("train.gif");
+			/* background-repeat: no-repeat; */
+			/* background-attachment: fixed; */
+			background-position: center;
+		}
+
+		.text-center {
+			margin-bottom: 40 px;
+		}
+
+		.card-header {
+			background-color: rgb(4, 4, 114);
+			color: white;
+
+		}
+
+		.form-group {
+			/* text-align: center; */
+			margin-bottom: 20 px;
+			margin-left: 40 px;
+			padding-left: 20 px;
+		}
+
+		label {
+			margin-left: 20 px;
+			padding-left: 20 px;
+
+		}
+
+		form {
+			padding: 20 px;
+		}
+	</style>
+
+
+</head>
+
+<body>
+
+	<!-- Overall Bootstrap Grid -->
+	<div class="container">
+		<!-- Jumbotron with Title -->
+		<div class="jumbotron">
+			<h1 class="text-center">
+				<strong>Catch that Train!</strong>
+			</h1>
+
+		</div>
+
+
+
+		<div class="card">
+			<div class="card-header">
+				Current Train Schedule
+			</div>
+			<div class="stuff">
+
+				<p>times etc</p>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				Add a Train
+			</div>
+			<form>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Train Name</label>
+					<input class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter train name">
+
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Destination</label>
+					<input class="form-control" id="destination" placeholder="Destination">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">First Train Time (HH:mm - military time)</label>
+					<input class="form-control" id="time" placeholder="HH:mm">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Frequency (min)</label>
+					<input class="form-control" id="frequency" placeholder="Frequency">
+				</div>
+
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+
+
+
+
+
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
