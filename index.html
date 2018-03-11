@@ -14,15 +14,14 @@
 
 	<style>
 		.jumbotron {
+			padding-top: 20px;
+			padding-bottom: 108px;
 			background-image: url("train.gif");
 			/* background-repeat: no-repeat; */
 			/* background-attachment: fixed; */
 			background-position: center;
 		}
 
-		.text-center {
-			margin-bottom: 40 px;
-		}
 
 		.card-header {
 			/* font-size: 30 px; */
@@ -31,21 +30,22 @@
 
 		}
 
-		.form-group {
-			/* text-align: center; */
-			margin-bottom: 20 px;
-			margin-left: 40 px;
-			padding-left: 20 px;
+
+		#grad {
+			background: linear-gradient(#62B9A9, #ff7a51);
 		}
 	</style>
 
 
 </head>
 
-<body>
+<body id="grad">
 
 	<!-- Overall Bootstrap Grid -->
-	<div class="container">
+	<div class="container" id="background">
+
+
+
 		<!-- Jumbotron with Title -->
 		<div class="jumbotron">
 			<h1 class="text-center">
@@ -55,40 +55,37 @@
 		</div>
 
 
-
+		<!-- this is my train table div -->
 		<div class="card" id="schedule">
 			<div class="card-header">
 				Current Train Schedule
 			</div>
-			<div class="row">
-				<div class="col">
-					<p>Train Name</p>
-				</div>
-				<div class="col">
-					<p>Destination</p>
-				</div>
-				<div class="col">
-					<p>Frequency (min)</p>
-				</div>
-				<div class="col">
-					<p>Next Arrival</p>
-				</div>
-				<div class="col">
-					<p>Minutes Away</p>
-				</div>
 
 
-			</div>
+			<table class="table" id="train-table">
+				<thead>
+					<tr>
+						<th>Train Name</th>
+						<th>Destination</th>
+						<th>Frequency (min)</th>
+						<th>Next Arrival</th>
+						<th>Minutes Away</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- this is where my rows will generate -->
+				</tbody>
+			</table>
 
-
-
-
-			<div class="stuff" id="train-schedule">
-
-
-			</div>
 		</div>
 
+
+
+
+
+
+
+		<!-- this is my form div -->
 		<div class="card mt-3" id="formdiv">
 			<div class="card-header">
 				Add a Train
@@ -202,26 +199,21 @@
 			console.log(childSnapshot.val().frequency);
 
 
-			// // full list of items to the well
-			// $("#train-schedule").prepend(childSnapshot.val().name +
-			// 	"_____________" + childSnapshot.val().destination +
-			// 	"_____________" + childSnapshot.val().time +
-			// 	"______________" + childSnapshot.val().frequency + "_________"); 
 
 
 
+			//save all the values to a variable
+
+			name = (childSnapshot.val().name);
+			destination = (childSnapshot.val().destination);
+			time = (childSnapshot.val().time);
+			frequency = (childSnapshot.val().frequency);
+			var next = 0;
+			var minAway = 0;
 
 
-			// full list of items to the well
-			//this doesn't quite work in Bootstrap 4, but i am working on the styling
-
-
-			$("#train-schedule").prepend("<div class='well'><span class='train-name'> " + childSnapshot.val().name +
-				" </span><span class='train-destination'> " + childSnapshot.val().destination +
-				" </span><span class='train-time'> " + childSnapshot.val().time +
-				" </span><span class='train-frequency'> " + childSnapshot.val().frequency + " </span></div>");
-
-
+			// Add each train's data into the table
+			$("#train-table > tbody").prepend("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + minAway + "</td></tr>");
 
 
 
@@ -235,59 +227,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
