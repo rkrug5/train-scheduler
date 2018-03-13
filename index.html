@@ -12,6 +12,9 @@
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery.js"></script>
 
+	<!-- moment.js -->
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 	<style>
 		.jumbotron {
 			padding-top: 20px;
@@ -62,7 +65,7 @@
 			</div>
 
 
-			<table class="table" id="train-table">
+			<table class="table table-striped" id="train-table">
 				<thead>
 					<tr>
 						<th>Train Name</th>
@@ -102,7 +105,7 @@
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">First Train Time (HH:mm - military time)</label>
-					<input class="form-control" id="time-input" placeholder="HH:mm">
+					<input class="form-control" id="start-input" placeholder="HH:mm">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Frequency (min)</label>
@@ -150,7 +153,7 @@
 		// Initial Values
 		var name = "";
 		var destination = "";
-		var time = 0;
+		var start = 0;
 		var frequency = 0;
 
 
@@ -166,7 +169,7 @@
 			// Don't forget to provide initial data to your Firebase database. (see lines 140-143)
 			name = $("#name-input").val().trim();
 			destination = $("#destination-input").val().trim();
-			time = $("#time-input").val().trim();
+			start = $("#start-input").val().trim();
 			frequency = $("#frequency-input").val().trim();
 
 
@@ -175,7 +178,7 @@
 
 				name: name,
 				destination: destination,
-				time: time,
+				start: start,
 				frequency: frequency,
 				dateAdded: firebase.database.ServerValue.TIMESTAMP
 			});
@@ -183,7 +186,7 @@
 			//clears the input box for the next suggestion
 			$("#name-input").val(" ");
 			$("#destination-input").val(" ");
-			$("#time-input").val(" ");
+			$("#start-input").val(" ");
 			$("#frequency-input").val(" ");
 
 		});
@@ -195,7 +198,7 @@
 			// Log everything that's coming out of snapshot
 			console.log(childSnapshot.val().name);
 			console.log(childSnapshot.val().destination);
-			console.log(childSnapshot.val().time);
+			console.log(childSnapshot.val().start);
 			console.log(childSnapshot.val().frequency);
 
 
@@ -206,10 +209,43 @@
 
 			name = (childSnapshot.val().name);
 			destination = (childSnapshot.val().destination);
-			time = (childSnapshot.val().time);
+			start = (childSnapshot.val().time);
 			frequency = (childSnapshot.val().frequency);
 			var next = 0;
 			var minAway = 0;
+			var timeNow = 0;
+
+
+
+			// convert the train start time to unix time
+			// var trainTime = (start).format("HH:mm");
+
+			// console.log(trainTime);
+
+			//trying something from a stackoverflow solution
+			// var current_time_unix = moment();
+			// var firstTrain = moment.unix(start).format("03/12/18 HH:mm");
+			// console.log(firstTrain);
+
+
+			//moment will get the current time in HH:mm
+			var current_time = new moment().format("HH:mm");
+
+			//test in console
+			console.log("current time is: " + current_time);
+
+			//now i will try to calculate the difference between current_time and trainTime
+			// start.diff(current_time, "minutes");
+
+
+
+
+			var trainMinutes = moment().diff(moment.unix(current_time, start), "minutes");
+
+			console.log(trainMinutes);
+
+			timeNow = moment().hours();
+			console.log(timeNow);
 
 
 			// Add each train's data into the table
