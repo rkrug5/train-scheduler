@@ -1,7 +1,7 @@
 .jumbotron {
 	padding-top: 20px;
 	padding-bottom: 108px;
-	background-image: url("train.gif");
+	background-image: url("../images/train.gif");
 	/* background-repeat: no-repeat; */
 	/* background-attachment: fixed; */
 	background-position: center;
@@ -17,7 +17,9 @@
 
 }
 
-
+#add-train {
+	margin-bottom: 20px;
+}
 #grad {
 	background: linear-gradient(#62B9A9, #ff7a51);
 }
