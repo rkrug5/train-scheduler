@@ -27,17 +27,23 @@
 #localtime {
 	background-color: transparent;
 	color: black;
-	border-width: 10px;
+	border: 10px;
 	border-color: black;
 	/* background-color: rgb(4, 4, 114); */
 	/* color: aliceblue; */
 	text-align: center;
 	margin: auto;
 	margin-bottom: 20px;
-	padding: 10px;
+	/* padding: 10px; */
 
 }
 
 #formdiv {
 	margin-bottom: 150px;
+}
+
+#clockborder {
+	padding-color: black;
+	border: 10px;
+	border-color: black;
 }
