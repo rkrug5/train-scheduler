@@ -2,14 +2,11 @@
 	padding-top: 20px;
 	padding-bottom: 108px;
 	background-image: url("../images/train.gif");
-	/* background-repeat: no-repeat; */
-	/* background-attachment: fixed; */
 	background-position: center;
 }
 
 
 .card-header {
-	/* font-size: 30 px; */
 	background-color: rgb(4, 4, 114);
 	 /* background-color: rgba(7, 3, 3, 0.596);  */
 	
@@ -29,21 +26,13 @@
 	color: black;
 	border: 10px;
 	border-color: black;
-	/* background-color: rgb(4, 4, 114); */
-	/* color: aliceblue; */
 	text-align: center;
 	margin: auto;
 	margin-bottom: 20px;
-	/* padding: 10px; */
+	
 
 }
 
 #formdiv {
 	margin-bottom: 150px;
-}
-
-#clockborder {
-	padding-color: black;
-	border: 10px;
-	border-color: black;
 }

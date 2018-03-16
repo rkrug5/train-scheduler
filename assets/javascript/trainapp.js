@@ -1,5 +1,3 @@
-
-
 $('document').ready(function () {
 
 	// Initialize Firebase
@@ -88,47 +86,59 @@ $('document').ready(function () {
 		//this splits the user input into an array with [HH, mm]
 		var timeArr = start.split(":");
 
-		console.log(timeArr);
+		// console.log(timeArr);
 
 
 		//this gives the moment the values from time array as the user input time
 		var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1])
 
-		console.log(trainTime.format("HH:mm"));
+		// console.log(trainTime.format("HH:mm"));
 
 		trainTime.format("HH:mm");
 
-		var minAway = currentTime.diff(trainTime, "minutes");
-		// var minAway = trainTime.diff(currentTime, "minutes");
 
-		function checkminAway() {
-			if (minAway < 0) {
-				minAway = -minAway
-			}
-			else if (minAway < frequency) {
-				minAway = minAway;
-			}
+		console.log("next arrival " + nextArrivalTime);
+		// console.log("nextarrival" + nextArrival);
 
-			else if (minAway > frequency) {
-				minAway = (minAway % frequency);
-			}
-		}
+		var timeDifference = currentTime.diff(trainTime, "minutes");
 
-		checkminAway();
+		var remainderTime = (timeDifference % frequency);
+
+		var minAway = (frequency - remainderTime);
+
+		var nextArrivalTime = currentTime.add(minAway, "minutes").local().format("HH:mm");
 
 
-		console.log(minAway);
+		//call getnext..function to wherever i am pulling the data from:
+
+		// function getNextArrivalMoment(trainTime, currentTime, frequency) {
+		// 	var timeDifference = currentTime.diff(trainTime, "minutes");
+
+
+		// 	// moment().add(timeDifference, 'minutes');
+
+		// 	var remainderTime = (timeDifference % frequency);
+
+		// 	var minAway = (frequency - remainderTime);
+
+		// 	console.log(frequency - remainderTime);
+
+		// 	console.log("minutes away " + minAway);
+
+		// 	return (currentTime.add(minAway, "minutes").local().format("HH:mm"));
+
+		// }
 
 
 
 
-
-		timeNow = moment().hours();
-		console.log(timeNow);
+		// current time 12:00 train 10:00 
+		// timedifference = 120
+		// 8: 00 8: 13 8: 26 8: 39 8: 52 9: 05
 
 
 		// Add each train's data into the table
-		$("#train-table > tbody").prepend("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + start + "</td><td>" + frequency + "</td><td>" + trainTime.format("HH:mm") + "</td><td>" + minAway + "</td></tr>");
+		$("#train-table > tbody").prepend("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + start + "</td><td>" + frequency + "</td><td>" + nextArrivalTime + "</td><td>" + minAway + "</td></tr>");
 
 
 
@@ -148,7 +158,7 @@ $('document').ready(function () {
 
 	function ut() {
 		var d = new Date();
-		document.getElementById("time").innerHTML = d.toLocaleTimeString();
+		document.getElementById("time").innerHTML = d.toLocaleTimeString('en-US', { hour12: false });
 		document.getElementById("date").innerHTML = d.toLocaleDateString();
 
 
