@@ -19,7 +19,19 @@ $('document').ready(function () {
 	// Initial Values
 	var name = "";
 	var destination = "";
-	var start = 0;
+	var firstTrain = "03:30";
+
+
+	//from the guide
+	// First Time (pushed back 1 year to make sure it comes before current time)
+	//var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+	//console.log(firstTimeConverted);
+	//==============================================================================
+
+	var firstTrainLastYear = moment(firstTrain, "HH:mm").subtract(1, "years");
+
+	console.log(firstTrainLastYear);
+
 	var frequency = 0;
 
 
@@ -34,7 +46,7 @@ $('document').ready(function () {
 		// Don't forget to provide initial data to your Firebase database. (see lines 140-143)
 		name = $("#name-input").val().trim();
 		destination = $("#destination-input").val().trim();
-		start = $("#start-input").val().trim();
+		firstTrain = $("#start-input").val().trim();
 		frequency = $("#frequency-input").val().trim();
 
 
@@ -43,7 +55,7 @@ $('document').ready(function () {
 
 			name: name,
 			destination: destination,
-			start: start,
+			firstTrain: firstTrain,
 			frequency: frequency,
 			dateAdded: firebase.database.ServerValue.TIMESTAMP
 		});
@@ -63,12 +75,12 @@ $('document').ready(function () {
 		// Log everything that's coming out of snapshot
 		console.log(childSnapshot.val().name);
 		console.log(childSnapshot.val().destination);
-		console.log(childSnapshot.val().start);
+		console.log(childSnapshot.val().firstTrain);
 		console.log(childSnapshot.val().frequency);
 
 
 
-		var currentTime = moment();
+
 
 		// console.log(start.format());
 
@@ -76,7 +88,7 @@ $('document').ready(function () {
 
 		name = (childSnapshot.val().name);
 		destination = (childSnapshot.val().destination);
-		start = (childSnapshot.val().start);
+		firstTrain = (childSnapshot.val().firstTrain);
 		frequency = (childSnapshot.val().frequency);
 		var next = 0;
 		var minAway = 0;
@@ -84,23 +96,33 @@ $('document').ready(function () {
 
 
 		//this splits the user input into an array with [HH, mm]
-		var timeArr = start.split(":");
+		// var timeArr = firstTrain.split(":");
 
 		// console.log(timeArr);
 
 
 		//this gives the moment the values from time array as the user input time
-		var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1])
+		// var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
+
 
 		// console.log(trainTime.format("HH:mm"));
-
-		trainTime.format("HH:mm");
+		// 
+		// trainTime.format("HH:mm");
 
 
 		console.log("next arrival " + nextArrivalTime);
 		// console.log("nextarrival" + nextArrival);
 
-		var timeDifference = currentTime.diff(trainTime, "minutes");
+
+
+		//get current time
+		var currentTime = moment();
+
+
+		//find the difference between then and now
+		var timeDifference = currentTime.diff(firstTrainLastYear, "minutes");
+
+
 
 		var remainderTime = (timeDifference % frequency);
 
@@ -138,7 +160,7 @@ $('document').ready(function () {
 
 
 		// Add each train's data into the table
-		$("#train-table > tbody").prepend("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + start + "</td><td>" + frequency + "</td><td>" + nextArrivalTime + "</td><td>" + minAway + "</td></tr>");
+		$("#train-table > tbody").prepend("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + firstTrain + "</td><td>" + frequency + "</td><td>" + nextArrivalTime + "</td><td>" + minAway + "</td></tr>");
 
 
 
